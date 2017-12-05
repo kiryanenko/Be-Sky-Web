@@ -22,23 +22,27 @@ RUN make && make install
 # Скопируем файл stat.xsl из папки с исходниками в папку nginx
 ADD nginx/nginx-rtmp-module/stat.xsl /etc/nginx/
 
+RUN rm /etc/nginx/sites-enabled/default
+
 ADD nginx/be-sky.conf /etc/nginx/sites-available
 RUN ln -s /etc/nginx/sites-available/be-sky.conf /etc/nginx/sites-enabled/
-RUN rm /etc/nginx/sites-enabled/default
 
 ADD nginx/nginx.conf /etc/nginx
 
 RUN nginx -t
 RUN service nginx restart
 
-# Make port 80 available to the world outside this container
+
+# Make ports available to the world outside this container
 EXPOSE 80
 EXPOSE 1935
+
 
 # Set the working directory to /app
 WORKDIR /app
 # Copy the current directory contents into the container at /app
 ADD ./app /app
+
 
 # run the application
 CMD service nginx start && gunicorn app:app
