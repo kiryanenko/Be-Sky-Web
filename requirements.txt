@@ -1,4 +1,0 @@
-Flask
-cf-deployment-tracker==1.0.4
-cloudant==2.4.0
-gunicorn

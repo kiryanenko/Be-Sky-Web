@@ -1,13 +1,16 @@
 FROM ubuntu:16.04
-FROM python:3-onbuild
 MAINTAINER Alexander Kiryanenko <kiryanenkoav@gmail.com>
 
 RUN apt-get update
 # Для сборки Nginx понадобится Perl библиотека регулярных выражений и заголовки OpenSSL
-RUN apt-get install -y nginx libpcre3 libpcre3-dev libssl-dev
+RUN apt-get install -y gcc make nginx libpcre3 libpcre3-dev libssl-dev
+
+# Копируем исходный код в Docker-контейнер
+ENV APP /root/app
+ADD ./ $APP
 
 # Сборка Nginx с поддержкой rtmp
-WORKDIR ./nginx/nginx-1.6.0
+WORKDIR $APP/nginx/nginx-1.6.0
 # Конфигурируем Nginx
 RUN ./configure \
     --prefix=/usr \
@@ -32,17 +35,17 @@ ADD nginx/nginx.conf /etc/nginx
 RUN nginx -t
 RUN service nginx restart
 
+# Установка JDK
+RUN apt-get install -y openjdk-8-jdk-headless
+RUN apt-get install -y maven
+
+# Собираем и устанавливаем пакет
+WORKDIR $APP/app
+RUN mvn package
 
 # Make ports available to the world outside this container
 EXPOSE 80
 EXPOSE 1935
 
-
-# Set the working directory to /app
-WORKDIR /app
-# Copy the current directory contents into the container at /app
-ADD ./app /app
-
-
 # run the application
-CMD service nginx start && gunicorn app:app
+CMD service nginx start && java -Dserver.port=8000 -Xmx300M -Xmx300M -jar target/*.jar
