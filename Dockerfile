@@ -6,7 +6,7 @@ RUN apt-get update
 RUN apt-get install -y gcc make nginx libpcre3 libpcre3-dev libssl-dev
 
 # Копируем исходный код в Docker-контейнер
-ENV APP /root/app
+ENV APP /app
 ADD ./ $APP
 
 # Сборка Nginx с поддержкой rtmp
