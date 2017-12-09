@@ -12,15 +12,14 @@
     <link href="/styles.css" rel="stylesheet">
 
     <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
-    <style>
-
-    </style>
 </head>
 
-<body>
+<body onload="connectDrone(); connectClient();" onkeydown="keydown(event);" onkeyup="keyup(event);">
     <div>
        <video data-dashjs-player autoplay src="/dash/stream.mpd" controls></video>
     </div>
+
+    <p id="drone-vector">dfgdfg</p>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -28,6 +27,9 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="static/antixss.js" type="text/javascript"></script>
+
+    <script src="/client.js"></script>
+    <script src="/drone.js"></script>
 </body>
 
 </html>

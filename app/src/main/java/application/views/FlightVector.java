@@ -22,14 +22,14 @@ public class FlightVector {
 
 
     @JsonCreator
-    public FlightVector(Integer trust,
-                        Integer side,
-                        Integer rotation,
-                        Integer forward) {
-        this.trust = trust;
-        this.side = side;
-        this.rotation = rotation;
-        this.forward = forward;
+    public FlightVector(@JsonProperty("trust") Integer trust,
+                        @JsonProperty("side") Integer side,
+                        @JsonProperty("rotation") Integer rotation,
+                        @JsonProperty("forward") Integer forward) {
+        this.trust = trust == null ? 0 : trust;
+        this.side = side == null ? 0 : side;
+        this.rotation = rotation == null ? 0 : rotation;
+        this.forward = forward == null ? 0 : forward;
     }
 
 
