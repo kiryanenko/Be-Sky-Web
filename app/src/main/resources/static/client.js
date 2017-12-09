@@ -18,7 +18,7 @@ function keyup(event){
 
 
 function connectClient() {
-    socket = new WebSocket("ws://0.0.0.0:8000/client");
+    socket = new WebSocket("ws://be-sky.xyz/client");
     socket.onclose = function (event) {
         console.log('Код: ' + event.code + ' причина: ' + event.reason);
         connectClient();

@@ -2,7 +2,7 @@ var socket;
 
 function connectDrone(){
     console.log('connectDrone');
-    socket = new WebSocket("ws://0.0.0.0:8000/drone");
+    socket = new WebSocket("ws://be-sky.xyz/drone");
     socket.onmessage = function(event) {
         printVector(JSON.parse(event.data));
     };
